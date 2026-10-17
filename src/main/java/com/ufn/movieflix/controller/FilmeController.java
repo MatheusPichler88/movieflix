@@ -39,9 +39,8 @@ public class FilmeController {
 
     @PostMapping
     public ResponseEntity<FilmeResponse> salvarFilme(@RequestBody FilmeRequest requisicao){
-        Filme filme = FilmeMapper.paraFilme(requisicao);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(FilmeMapper.paraFilmeResponse(filmeService.salvarFilme(filme)));
+        Filme filmeSalvo = filmeService.salvarFilme(FilmeMapper.paraFilme(requisicao));
+        return ResponseEntity.ok(FilmeMapper.paraFilmeResponse(filmeSalvo));
     }
 
     //Delete

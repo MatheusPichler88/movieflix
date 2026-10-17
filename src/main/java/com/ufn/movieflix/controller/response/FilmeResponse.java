@@ -1,10 +1,18 @@
 package com.ufn.movieflix.controller.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
-public record FilmeResponse(Long id, String titulo, String descricao, LocalDate dataLancamento, double avaliacao, LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
+public record FilmeResponse(Long id,
+                            String titulo,
+                            String descricao,
+                            double avaliacao,
+                            @JsonFormat(pattern = "dd/MM/yyyy")
+                            LocalDate lancamento,
+                            List<CategoriaResponse> categorias,
+                            List<StreamingResponse> streaming) {
 }

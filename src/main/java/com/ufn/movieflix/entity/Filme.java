@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -33,11 +32,11 @@ public class Filme {
 
     @CreationTimestamp //preenche com data e hora quando é criado no banco
     @Column(name = "criado_em")
-    private LocalDateTime criadoEm;
+    private LocalDate lancamento;
 
     @UpdateTimestamp //atualiza data e hora no banco quando houver alterações
     @Column(name = "atualizado_em")
-    private LocalDateTime atualizadoEm;
+    private LocalDate atualizadoEm;
 
     // Um filme pode ter varias categorias
     @ManyToMany

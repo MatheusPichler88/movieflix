@@ -1,6 +1,14 @@
 package com.ufn.movieflix.controller.request;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public record FilmeRequest(String titulo, String descricao, String dataLancamento, double avaliacao, LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
+import java.time.LocalDate;
+import java.util.List;
+public record FilmeRequest(String titulo,
+                           String descricao,
+                           double avaliacao,
+                           @JsonFormat(pattern = "dd/MM/yyyy")
+                           LocalDate lancamento,
+                           List<Long> categorias,
+                           List<Long> streaming) {
 }
