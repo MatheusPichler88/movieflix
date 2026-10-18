@@ -14,6 +14,7 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     public Usuario salvar(Usuario usuario){
+        //Nunca salva a senha pura, grava apenas o hash gerado pelo BCrypt
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }

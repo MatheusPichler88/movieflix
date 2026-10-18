@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "usuario")
+//UserDetails é a interface que o Spring Security usa para representar o usuário que está logando
 public class Usuario implements UserDetails {
 
     @Id
@@ -32,21 +33,25 @@ public class Usuario implements UserDetails {
     private String senha;
 
 
+    //Perfis/permissões do usuário (por enquanto sem nenhuma)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
+    //Senha que o Spring Security compara no login (TODO: ainda retorna vazio, deve retornar o campo senha)
     @Override
     public @Nullable String getPassword() {
         return "";
     }
 
+    //Identificador do usuário no login (TODO: ainda retorna vazio, deve retornar o email)
     @Override
     public String getUsername() {
         return "";
     }
 
+    //Os 4 métodos abaixo controlam o estado da conta, por enquanto a conta nunca expira, nunca bloqueia e está sempre ativa
     @Override
     public boolean isAccountNonExpired() {
         return true;

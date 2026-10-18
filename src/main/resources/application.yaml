@@ -1,10 +1,12 @@
 spring:
   application:
     name: movieflix
+  config:
+    import: optional:file:.env[.properties]
   datasource:
     url: jdbc:postgresql://localhost:5432/movieflix
     username: postgres
-    password: 1234
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
     jpa:
@@ -13,3 +15,7 @@ spring:
 
     flyway:
       enabled: true
+
+movieflix:
+  security:
+    secretKey: ${JWT_SECRET}
