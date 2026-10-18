@@ -16,7 +16,7 @@ public class UsuarioMapper {
                 .build();
     }
 
-    public static UsuarioResponse paraUsuarioRequest(Usuario usuario){
+    public static UsuarioResponse paraUsuarioResponse(Usuario usuario){
         return UsuarioResponse.builder()
                 .id(usuario.getId())
                 .nome(usuario.getNome())
