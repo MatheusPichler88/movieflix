@@ -44,6 +44,13 @@ public class CategoriaController {
                 .body(CategoriaMapper.paraCategoriaResponse(categoriaService.salvarCategoria(categoria)));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoriaResponse> atualizarCategoria(@PathVariable Long id, @RequestBody CategoriaRequest requisicao){
+        return categoriaService.atualizarCategoria(id, CategoriaMapper.paraCategoria(requisicao))
+                .map(categoria -> ResponseEntity.ok(CategoriaMapper.paraCategoriaResponse(categoria)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCategoria(@PathVariable Long id){
         categoriaService.deletarCategoria(id);

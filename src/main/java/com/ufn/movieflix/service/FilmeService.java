@@ -34,8 +34,37 @@ public class FilmeService {
         return filmeRepository.save(filme);
     }
 
+    public Optional<Filme> atualizarFilme(Long id, Filme filmeAtualizado){
+        Optional<Filme> optFilme = filmeRepository.findById(id);
+        if(optFilme.isPresent()){
+            List<Categoria> categorias = listarCategorias(filmeAtualizado.getCategorias());
+            List<Streaming> streamings = listarStreaming(filmeAtualizado.getStreaming());
+
+            Filme filme = optFilme.get();
+            filme.setTitulo(filmeAtualizado.getTitulo());
+            filme.setDescricao(filmeAtualizado.getDescricao());
+            filme.setAvaliacao(filmeAtualizado.getAvaliacao());
+            filme.setLancamento(filmeAtualizado.getLancamento());
+
+            filme.getCategorias().clear();
+            filme.getCategorias().addAll(categorias);
+
+            filme.getStreaming().clear();
+            filme.getStreaming().addAll(streamings);
+            filmeRepository.save(filme);
+            return Optional.of(filme);
+        }
+        return Optional.empty();
+    }
+
     public void deletarFilme(Long id){
         filmeRepository.deleteById(id);
+    }
+
+    public List<Filme> filmesPorCategoria(Long id){
+        return filmeRepository.findFilmeByCategoria(List.of(Categoria.builder()
+                .id(id)
+                .build()));
     }
 
     private List<Categoria> listarCategorias(List<Categoria> categorias){

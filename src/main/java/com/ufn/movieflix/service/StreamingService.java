@@ -27,6 +27,17 @@ public class StreamingService {
         return streamingInterface.save(streaming);
     }
 
+    public Optional<Streaming> atualizarStreaming(Long id, Streaming streamingAtualizado){
+        Optional<Streaming> optStreaming = streamingInterface.findById(id);
+        if(optStreaming.isPresent()){
+            Streaming streaming = optStreaming.get();
+            streaming.setNome(streamingAtualizado.getNome());
+            streamingInterface.save(streaming);
+            return Optional.of(streaming);
+        }
+        return Optional.empty();
+    }
+
     public void deletarStreaming(Long id){
         streamingInterface.deleteById(id);
     }

@@ -37,10 +37,26 @@ public class FilmeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/procurar")
+    public ResponseEntity<List<FilmeResponse>> filmesPorCategoria(@RequestParam Long categoria){
+        return ResponseEntity.ok(filmeService.filmesPorCategoria(categoria)
+                .stream()
+                .map(FilmeMapper::paraFilmeResponse)
+                .toList()
+        );
+    }
+
     @PostMapping
     public ResponseEntity<FilmeResponse> salvarFilme(@RequestBody FilmeRequest requisicao){
         Filme filmeSalvo = filmeService.salvarFilme(FilmeMapper.paraFilme(requisicao));
         return ResponseEntity.ok(FilmeMapper.paraFilmeResponse(filmeSalvo));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FilmeResponse> atualizarFilme(@PathVariable Long id, @RequestBody FilmeRequest requisicao){
+        return filmeService.atualizarFilme(id, FilmeMapper.paraFilme(requisicao))
+                .map(filme -> ResponseEntity.ok(FilmeMapper.paraFilmeResponse(filme)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     //Delete

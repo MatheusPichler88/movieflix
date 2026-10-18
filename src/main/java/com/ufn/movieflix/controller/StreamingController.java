@@ -52,6 +52,12 @@ public class StreamingController {
 
 
     //Put
+    @PutMapping("/{id}")
+    public ResponseEntity<StreamingResponse> atualizarStreaming(@PathVariable Long id, @RequestBody StreamingRequest requisicao){
+        return streamingService.atualizarStreaming(id, StreamingMapper.paraStreaming(requisicao))
+                .map(streaming -> ResponseEntity.ok(StreamingMapper.paraStreamingResponse(streaming)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     //Delete
     @DeleteMapping("/{id}")

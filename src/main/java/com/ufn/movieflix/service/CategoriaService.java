@@ -26,6 +26,17 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
+    public Optional<Categoria> atualizarCategoria(Long id, Categoria categoriaAtualizada){
+        Optional<Categoria> optCategoria = categoriaRepository.findById(id);
+        if(optCategoria.isPresent()){
+            Categoria categoria = optCategoria.get();
+            categoria.setNome(categoriaAtualizada.getNome());
+            categoriaRepository.save(categoria);
+            return Optional.of(categoria);
+        }
+        return Optional.empty();
+    }
+
     public void deletarCategoria(Long id){
         categoriaRepository.deleteById(id);
     }
