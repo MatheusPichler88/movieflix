@@ -39,16 +39,16 @@ public class Usuario implements UserDetails {
         return List.of();
     }
 
-    //Senha que o Spring Security compara no login (TODO: ainda retorna vazio, deve retornar o campo senha)
+    //Senha que o Spring Security compara no login
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return senha;
     }
 
-    //Identificador do usuário no login (TODO: ainda retorna vazio, deve retornar o email)
+    //Identificador do usuário no login
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
     //Os 4 métodos abaixo controlam o estado da conta, por enquanto a conta nunca expira, nunca bloqueia e está sempre ativa

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 import java.util.List;
+
 public record FilmeRequest(String titulo,
                            String descricao,
                            double avaliacao,

@@ -12,11 +12,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    //Filtro que lê o token JWT de cada requisição e autentica o usuário
+    private final SecurityFilter securityFilter;
 
     //Define as regras de segurança da aplicação (quais rotas são públicas e quais exigem autenticação)
     @Bean
@@ -29,12 +33,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/movieflix/auth/login").permitAll() //Libera a rota de login para qualquer usuário
                         .anyRequest().authenticated() // Todas outras rotas precisam estar autenticadas
                 )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //Roda o filtro do JWT antes do filtro padrão de login do Spring
                 .build();
     }
 
     //Expõe o AuthenticationManager para ser usado no login (ele valida o email e a senha)
     @Bean
-    public AuthenticationManager authenticationManager (AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

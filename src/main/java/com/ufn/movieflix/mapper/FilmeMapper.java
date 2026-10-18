@@ -7,6 +7,7 @@ import com.ufn.movieflix.entity.Categoria;
 import com.ufn.movieflix.entity.Filme;
 import com.ufn.movieflix.entity.Streaming;
 import lombok.experimental.UtilityClass;
+
 import java.util.List;
 
 @UtilityClass //torna a classe final e deixa os métodos static

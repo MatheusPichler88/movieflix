@@ -16,7 +16,7 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       //O "username" do Spring Security aqui é o email
-       return usuarioRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha não encontrado"));
+        //O "username" do Spring Security aqui é o email
+        return usuarioRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha não encontrado"));
     }
 }

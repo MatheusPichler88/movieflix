@@ -4,6 +4,7 @@ import com.ufn.movieflix.entity.Categoria;
 import com.ufn.movieflix.repository.CategoriaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +15,13 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     public List<Categoria> listarCategorias(){
-       return categoriaRepository.findAll();
+        return categoriaRepository.findAll();
     }
 
     public Optional<Categoria> buscarCategoriaPorId(Long id){
         return categoriaRepository.findById(id);
     }
+
     public Categoria salvarCategoria(Categoria categoria){
         return categoriaRepository.save(categoria);
     }

@@ -9,9 +9,9 @@ import com.ufn.movieflix.entity.Usuario;
 import com.ufn.movieflix.mapper.UsuarioMapper;
 import com.ufn.movieflix.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +48,7 @@ public class AuthController {
         //Se a autenticação passou, o principal é o usuário que acabou de logar
         Usuario usuario = (Usuario) autenticacao.getPrincipal();
 
-        String token = tokenService.geradorToken(usuario);
+        String token = tokenService.gerarToken(usuario);
 
         return ResponseEntity.ok(new LoginResponse(token));
     }

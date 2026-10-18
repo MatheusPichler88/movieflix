@@ -15,7 +15,7 @@ public class CategoriaMapper {
                 .build();
     }
 
-    public static CategoriaResponse paraCategoriaResponse (Categoria categoria){
+    public static CategoriaResponse paraCategoriaResponse(Categoria categoria){
         return CategoriaResponse
                 .builder()
                 .id(categoria.getId())

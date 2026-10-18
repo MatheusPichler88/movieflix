@@ -21,7 +21,7 @@ public class StreamingController {
 
     //Get
     @GetMapping
-    public ResponseEntity<List<StreamingResponse>> listarStreaming(){
+    public ResponseEntity<List<StreamingResponse>> listarStreamings(){
         return ResponseEntity.ok(streamingService.listarStreamings()
                 .stream()
                 .map(StreamingMapper::paraStreamingResponse)
@@ -41,7 +41,7 @@ public class StreamingController {
 
     //Post
     @PostMapping
-    public ResponseEntity<StreamingResponse> salvarStreaming (@RequestBody StreamingRequest requisicao){
+    public ResponseEntity<StreamingResponse> salvarStreaming(@RequestBody StreamingRequest requisicao){
         Streaming streaming = StreamingMapper.paraStreaming(requisicao);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(StreamingMapper.paraStreamingResponse(streamingService.salvarStreaming(streaming)));
