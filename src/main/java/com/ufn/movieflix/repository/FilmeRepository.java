@@ -12,4 +12,4 @@ import java.util.List;
 public interface FilmeRepository extends JpaRepository<Filme, Long> {
 
     @Query("SELECT f FROM Filme f JOIN f.categorias c WHERE c IN :categorias")
-    List<Filme> findFilmeByCategoria(@Param("categorias") List<Categoria> categorias);}
+    List<Filme> buscarPorCategorias(@Param("categorias") List<Categoria> categorias);}

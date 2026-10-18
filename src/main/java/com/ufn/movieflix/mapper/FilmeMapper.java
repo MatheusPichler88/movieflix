@@ -19,7 +19,7 @@ public class FilmeMapper {
         List<Categoria> categorias = filmeRequest.categorias().stream()
                 .map(categoriaId -> Categoria.builder().id(categoriaId).build())
                 .toList();
-        List<Streaming> streamings = filmeRequest.streaming().stream()
+        List<Streaming> streamings = filmeRequest.streamings().stream()
                 .map(streamingsId -> Streaming.builder().id(streamingsId).build())
                 .toList();
 
@@ -30,7 +30,7 @@ public class FilmeMapper {
                 .avaliacao(filmeRequest.avaliacao())
                 .lancamento(filmeRequest.lancamento())
                 .categorias(categorias)
-                .streaming(streamings)
+                .streamings(streamings)
                 .build();
     }
 
@@ -42,7 +42,7 @@ public class FilmeMapper {
                 .map(categorias -> CategoriaMapper.paraCategoriaResponse(categorias))
                 .toList();
 
-        List<StreamingResponse> streamings = filme.getStreaming()
+        List<StreamingResponse> streamings = filme.getStreamings()
                 .stream()
                 .map(streaming -> StreamingMapper.paraStreamingResponse(streaming))
                 .toList();
@@ -55,7 +55,7 @@ public class FilmeMapper {
                 .avaliacao(filme.getAvaliacao())
                 .lancamento(filme.getLancamento())
                 .categorias(categoria)
-                .streaming(streamings)
+                .streamings(streamings)
                 .build();
     }
 }

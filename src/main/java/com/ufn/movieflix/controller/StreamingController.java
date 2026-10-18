@@ -5,7 +5,7 @@ import com.ufn.movieflix.controller.response.StreamingResponse;
 import com.ufn.movieflix.entity.Streaming;
 import com.ufn.movieflix.mapper.StreamingMapper;
 import com.ufn.movieflix.service.StreamingService;
-import org.apache.coyote.Response;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movieflix/streaming")
+@RequestMapping("/movieflix/streamings")
+@RequiredArgsConstructor
 public class StreamingController {
 
     private final StreamingService streamingService;
 
-    public StreamingController(StreamingService streamingService) {
-        this.streamingService = streamingService;
-    }
-
     //Get
     @GetMapping
     public ResponseEntity<List<StreamingResponse>> listarStreaming(){
-        return ResponseEntity.ok(streamingService.listarCategorias()
+        return ResponseEntity.ok(streamingService.listarStreamings()
                 .stream()
                 .map(StreamingMapper::paraStreamingResponse)
                 .toList());

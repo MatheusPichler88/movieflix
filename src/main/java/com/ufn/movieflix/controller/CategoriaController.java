@@ -5,6 +5,7 @@ import com.ufn.movieflix.controller.response.CategoriaResponse;
 import com.ufn.movieflix.entity.Categoria;
 import com.ufn.movieflix.mapper.CategoriaMapper;
 import com.ufn.movieflix.service.CategoriaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movieflix/categorias")
+@RequiredArgsConstructor
 public class CategoriaController {
 
     private final CategoriaService categoriaService;
-
-    public CategoriaController(CategoriaService categoriaService) {
-        this.categoriaService = categoriaService;
-    }
 
     @GetMapping
     public ResponseEntity<List<CategoriaResponse>> listarCategorias(){

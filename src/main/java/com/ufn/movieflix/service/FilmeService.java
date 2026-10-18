@@ -29,16 +29,16 @@ public class FilmeService {
     }
 
     public Filme salvarFilme(Filme filme){
-        filme.setCategorias(listarCategorias(filme.getCategorias()));
-        filme.setStreaming(listarStreaming(filme.getStreaming()));
+        filme.setCategorias(buscarCategorias(filme.getCategorias()));
+        filme.setStreamings(buscarStreamings(filme.getStreamings()));
         return filmeRepository.save(filme);
     }
 
     public Optional<Filme> atualizarFilme(Long id, Filme filmeAtualizado){
         Optional<Filme> optFilme = filmeRepository.findById(id);
         if(optFilme.isPresent()){
-            List<Categoria> categorias = listarCategorias(filmeAtualizado.getCategorias());
-            List<Streaming> streamings = listarStreaming(filmeAtualizado.getStreaming());
+            List<Categoria> categorias = buscarCategorias(filmeAtualizado.getCategorias());
+            List<Streaming> streamings = buscarStreamings(filmeAtualizado.getStreamings());
 
             Filme filme = optFilme.get();
             filme.setTitulo(filmeAtualizado.getTitulo());
@@ -49,8 +49,8 @@ public class FilmeService {
             filme.getCategorias().clear();
             filme.getCategorias().addAll(categorias);
 
-            filme.getStreaming().clear();
-            filme.getStreaming().addAll(streamings);
+            filme.getStreamings().clear();
+            filme.getStreamings().addAll(streamings);
             filmeRepository.save(filme);
             return Optional.of(filme);
         }
@@ -62,25 +62,25 @@ public class FilmeService {
     }
 
     public List<Filme> filmesPorCategoria(Long id){
-        return filmeRepository.findFilmeByCategoria(List.of(Categoria.builder()
+        return filmeRepository.buscarPorCategorias(List.of(Categoria.builder()
                 .id(id)
                 .build()));
     }
 
-    private List<Categoria> listarCategorias(List<Categoria> categorias){
-        List<Categoria> CategoriasEncontradas = new ArrayList<>();
+    private List<Categoria> buscarCategorias(List<Categoria> categorias){
+        List<Categoria> categoriasEncontradas = new ArrayList<>();
         for (Categoria categoria : categorias) {
-            categoriaService.buscarCategoriaPorId(categoria.getId()).ifPresent(CategoriasEncontradas::add);
+            categoriaService.buscarCategoriaPorId(categoria.getId()).ifPresent(categoriasEncontradas::add);
         }
-        return CategoriasEncontradas;
+        return categoriasEncontradas;
     }
 
-    private List<Streaming> listarStreaming(List<Streaming> streamings){
-        List<Streaming> StreamingEncontrados = new ArrayList<>();
+    private List<Streaming> buscarStreamings(List<Streaming> streamings){
+        List<Streaming> streamingsEncontrados = new ArrayList<>();
         for (Streaming streaming : streamings) {
-            streamingService.buscarStreamingPorId(streaming.getId()).ifPresent(StreamingEncontrados::add);
+            streamingService.buscarStreamingPorId(streaming.getId()).ifPresent(streamingsEncontrados::add);
         }
-        return StreamingEncontrados;
+        return streamingsEncontrados;
     }
 
 }

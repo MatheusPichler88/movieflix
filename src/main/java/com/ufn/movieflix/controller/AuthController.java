@@ -26,15 +26,15 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/registro")
-    public ResponseEntity<UsuarioResponse> registrar(@RequestBody UsuarioRequest usuarioRequest){
-        Usuario salvo = usuarioService.salvar(UsuarioMapper.paraUsuario(usuarioRequest));
+    public ResponseEntity<UsuarioResponse> registrar(@RequestBody UsuarioRequest requisicao){
+        Usuario salvo = usuarioService.salvar(UsuarioMapper.paraUsuario(requisicao));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.paraUsuarioResponse(salvo));
 
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
-        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.senha());
+    public ResponseEntity<String> login(@RequestBody LoginRequest requisicao){
+        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(requisicao.email(), requisicao.senha());
         Authentication autenticacao = authenticationManager.authenticate(userAndPass);
 
         Usuario usuario = (Usuario) autenticacao.getPrincipal();

@@ -10,5 +10,5 @@ public record FilmeRequest(String titulo,
                            @JsonFormat(pattern = "dd/MM/yyyy")
                            LocalDate lancamento,
                            List<Long> categorias,
-                           List<Long> streaming) {
+                           List<Long> streamings) {
 }

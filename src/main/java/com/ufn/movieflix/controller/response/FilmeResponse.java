@@ -14,5 +14,5 @@ public record FilmeResponse(Long id,
                             @JsonFormat(pattern = "dd/MM/yyyy")
                             LocalDate lancamento,
                             List<CategoriaResponse> categorias,
-                            List<StreamingResponse> streaming) {
+                            List<StreamingResponse> streamings) {
 }

@@ -5,20 +5,18 @@ import com.ufn.movieflix.controller.response.FilmeResponse;
 import com.ufn.movieflix.entity.Filme;
 import com.ufn.movieflix.mapper.FilmeMapper;
 import com.ufn.movieflix.service.FilmeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/movieflix/filme")
+@RequestMapping("/movieflix/filmes")
+@RequiredArgsConstructor
 public class FilmeController {
 
     private final FilmeService filmeService;
-
-    public FilmeController(FilmeService filmeService) {
-        this.filmeService = filmeService;
-    }
 
 
     @GetMapping

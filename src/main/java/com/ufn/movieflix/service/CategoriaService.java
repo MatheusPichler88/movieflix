@@ -2,18 +2,16 @@ package com.ufn.movieflix.service;
 
 import com.ufn.movieflix.entity.Categoria;
 import com.ufn.movieflix.repository.CategoriaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
-
-    public CategoriaService(CategoriaRepository categoriaRepository) {
-        this.categoriaRepository = categoriaRepository;
-    }
 
     public List<Categoria> listarCategorias(){
        return categoriaRepository.findAll();

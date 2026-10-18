@@ -1,45 +1,43 @@
 package com.ufn.movieflix.service;
 
 import com.ufn.movieflix.entity.Streaming;
-import com.ufn.movieflix.repository.StreamingInterface;
+import com.ufn.movieflix.repository.StreamingRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class StreamingService {
 
-    private final StreamingInterface streamingInterface;
+    private final StreamingRepository streamingRepository;
 
-    public StreamingService(StreamingInterface streamingInterface) {
-        this.streamingInterface = streamingInterface;
-    }
-
-    public List<Streaming> listarCategorias(){
-        return streamingInterface.findAll();
+    public List<Streaming> listarStreamings(){
+        return streamingRepository.findAll();
     }
 
     public Optional<Streaming> buscarStreamingPorId(Long id){
-        return streamingInterface.findById(id);
+        return streamingRepository.findById(id);
     }
 
     public Streaming salvarStreaming(Streaming streaming){
-        return streamingInterface.save(streaming);
+        return streamingRepository.save(streaming);
     }
 
     public Optional<Streaming> atualizarStreaming(Long id, Streaming streamingAtualizado){
-        Optional<Streaming> optStreaming = streamingInterface.findById(id);
+        Optional<Streaming> optStreaming = streamingRepository.findById(id);
         if(optStreaming.isPresent()){
             Streaming streaming = optStreaming.get();
             streaming.setNome(streamingAtualizado.getNome());
-            streamingInterface.save(streaming);
+            streamingRepository.save(streaming);
             return Optional.of(streaming);
         }
         return Optional.empty();
     }
 
     public void deletarStreaming(Long id){
-        streamingInterface.deleteById(id);
+        streamingRepository.deleteById(id);
     }
 
 
