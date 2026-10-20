@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST, "/movieflix/auth/registro").permitAll() //Libera a rota de cadastro para qualquer usuário
                         .requestMatchers(HttpMethod.POST, "/movieflix/auth/login").permitAll() //Libera a rota de login para qualquer usuário
+                        .requestMatchers(HttpMethod.GET, "/api/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/swagger/**").permitAll()
                         .anyRequest().authenticated() // Todas outras rotas precisam estar autenticadas
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //Roda o filtro do JWT antes do filtro padrão de login do Spring

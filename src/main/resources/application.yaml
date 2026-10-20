@@ -19,3 +19,9 @@ spring:
 movieflix:
   security:
     secretKey: ${JWT_SECRET}
+
+springdoc:
+  api-docs:
+    path: /api/api-docs
+  swagger-ui:
+    path: /swagger/index.html
