@@ -44,7 +44,7 @@ public class FilmeService {
             filme.setTitulo(filmeAtualizado.getTitulo());
             filme.setDescricao(filmeAtualizado.getDescricao());
             filme.setAvaliacao(filmeAtualizado.getAvaliacao());
-            filme.setLancamento(filmeAtualizado.getLancamento());
+            filme.setDataLancamento(filmeAtualizado.getDataLancamento());
 
             filme.getCategorias().clear();
             filme.getCategorias().addAll(categorias);

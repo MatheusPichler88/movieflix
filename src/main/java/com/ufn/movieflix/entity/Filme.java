@@ -33,7 +33,7 @@ public class Filme {
 
     @CreationTimestamp //preenche com data e hora quando é criado no banco
     @Column(name = "criado_em")
-    private LocalDate lancamento;
+    private LocalDate criadoEm;
 
     @UpdateTimestamp //atualiza data e hora no banco quando houver alterações
     @Column(name = "atualizado_em")

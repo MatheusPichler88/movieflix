@@ -29,7 +29,7 @@ public class FilmeMapper {
                 .titulo(filmeRequest.titulo())
                 .descricao(filmeRequest.descricao())
                 .avaliacao(filmeRequest.avaliacao())
-                .lancamento(filmeRequest.lancamento())
+                .dataLancamento(filmeRequest.lancamento())
                 .categorias(categorias)
                 .streamings(streamings)
                 .build();
@@ -54,7 +54,7 @@ public class FilmeMapper {
                 .titulo(filme.getTitulo())
                 .descricao(filme.getDescricao())
                 .avaliacao(filme.getAvaliacao())
-                .lancamento(filme.getLancamento())
+                .lancamento(filme.getDataLancamento())
                 .categorias(categoria)
                 .streamings(streamings)
                 .build();
