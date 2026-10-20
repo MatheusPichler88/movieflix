@@ -6,12 +6,14 @@ import com.ufn.movieflix.controller.request.UsuarioRequest;
 import com.ufn.movieflix.controller.response.LoginResponse;
 import com.ufn.movieflix.controller.response.UsuarioResponse;
 import com.ufn.movieflix.entity.Usuario;
+import com.ufn.movieflix.exception.UsernameOrPasswordInvalidException;
 import com.ufn.movieflix.mapper.UsuarioMapper;
 import com.ufn.movieflix.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,16 +42,22 @@ public class AuthController {
     //Autentica o usuário com email e senha
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest requisicao){
-        //Cria o objeto com as credenciais enviadas (ainda não autenticado)
-        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(requisicao.email(), requisicao.senha());
-        //O AuthenticationManager busca o usuário pelo AuthService e compara a senha com o hash do banco, se estiver errada lança exceção
-        Authentication autenticacao = authenticationManager.authenticate(userAndPass);
 
-        //Se a autenticação passou, o principal é o usuário que acabou de logar
-        Usuario usuario = (Usuario) autenticacao.getPrincipal();
+        try {
+            //Cria o objeto com as credenciais enviadas (ainda não autenticado)
+            UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(requisicao.email(), requisicao.senha());
+            //O AuthenticationManager busca o usuário pelo AuthService e compara a senha com o hash do banco, se estiver errada lança exceção
+            Authentication autenticacao = authenticationManager.authenticate(userAndPass);
 
-        String token = tokenService.gerarToken(usuario);
+            //Se a autenticação passou, o principal é o usuário que acabou de logar
+            Usuario usuario = (Usuario) autenticacao.getPrincipal();
 
-        return ResponseEntity.ok(new LoginResponse(token));
+            String token = tokenService.gerarToken(usuario);
+
+            return ResponseEntity.ok(new LoginResponse(token));
+
+        } catch (BadCredentialsException e) {
+            throw new UsernameOrPasswordInvalidException("Usuário ou senha inválido");
+        }
     }
 }

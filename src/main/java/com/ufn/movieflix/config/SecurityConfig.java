@@ -1,5 +1,6 @@
 package com.ufn.movieflix.config;
 
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) //Desabilita o CSRF, pois a API é stateless e não usa cookies de sessão
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //Garante que a aplicação seja stateless (sem sessão)
                 .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .requestMatchers(HttpMethod.POST, "/movieflix/auth/registro").permitAll() //Libera a rota de cadastro para qualquer usuário
                         .requestMatchers(HttpMethod.POST, "/movieflix/auth/login").permitAll() //Libera a rota de login para qualquer usuário
                         .anyRequest().authenticated() // Todas outras rotas precisam estar autenticadas
