@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,10 +44,11 @@ public class AuthController {
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso",
                     content = @Content(schema = @Schema(implementation = UsuarioResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos", content = @Content)
+            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Email já cadastrado", content = @Content)
     })
     @PostMapping("/registro")
-    public ResponseEntity<UsuarioResponse> registrar(@RequestBody UsuarioRequest requisicao){
+    public ResponseEntity<UsuarioResponse> registrar(@Valid @RequestBody UsuarioRequest requisicao){
         Usuario salvo = usuarioService.salvar(UsuarioMapper.paraUsuario(requisicao));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.paraUsuarioResponse(salvo));
 
@@ -56,10 +58,10 @@ public class AuthController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Login realizado com sucesso",
                     content = @Content(schema = @Schema(implementation = LoginResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Usuário ou senha inválido", content = @Content)
+            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos ou usuário/senha inválido", content = @Content)
     })
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest requisicao){
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest requisicao){
 
         try {
             //Cria o objeto com as credenciais enviadas (ainda não autenticado)
