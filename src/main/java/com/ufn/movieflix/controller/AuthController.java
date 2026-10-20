@@ -9,6 +9,13 @@ import com.ufn.movieflix.entity.Usuario;
 import com.ufn.movieflix.exception.UsernameOrPasswordInvalidException;
 import com.ufn.movieflix.mapper.UsuarioMapper;
 import com.ufn.movieflix.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,22 +31,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/movieflix/auth")
 @RequiredArgsConstructor
+@SecurityRequirements
+@Tag(name = "Autenticação", description = "Recurso responsável pelo cadastro e login de usuários")
 public class AuthController {
 
     private final UsuarioService usuarioService;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    //Cadastra um novo usuário
+    @Operation(summary = "Registrar usuário", description = "Cadastra um novo usuário. A senha é armazenada criptografada")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso",
+                    content = @Content(schema = @Schema(implementation = UsuarioResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Dados da requisição inválidos", content = @Content)
+    })
     @PostMapping("/registro")
     public ResponseEntity<UsuarioResponse> registrar(@RequestBody UsuarioRequest requisicao){
-        //A service criptografa a senha antes de salvar, e o response devolve o usuário sem a senha
         Usuario salvo = usuarioService.salvar(UsuarioMapper.paraUsuario(requisicao));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.paraUsuarioResponse(salvo));
 
     }
 
-    //Autentica o usuário com email e senha
+    @Operation(summary = "Realizar login", description = "Autentica o usuário com email e senha e retorna o token JWT")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso",
+                    content = @Content(schema = @Schema(implementation = LoginResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Usuário ou senha inválido", content = @Content)
+    })
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest requisicao){
 
