@@ -1,6 +1,7 @@
 package com.ufn.movieflix.service;
 
 import com.ufn.movieflix.entity.Usuario;
+import com.ufn.movieflix.exception.EmailJaCadastradoException;
 import com.ufn.movieflix.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,9 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     public Usuario salvar(Usuario usuario){
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new EmailJaCadastradoException("Email já cadastrado");
+        }
         //Nunca salva a senha pura, grava apenas o hash gerado pelo BCrypt
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);

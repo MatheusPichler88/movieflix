@@ -1,5 +1,6 @@
 package com.ufn.movieflix.config;
 
+import com.ufn.movieflix.exception.EmailJaCadastradoException;
 import com.ufn.movieflix.exception.UsernameOrPasswordInvalidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -17,6 +18,12 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(UsernameOrPasswordInvalidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleNotFoundExceptions(UsernameOrPasswordInvalidException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(EmailJaCadastradoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleEmailJaCadastradoException(EmailJaCadastradoException e) {
         return e.getMessage();
     }
 
