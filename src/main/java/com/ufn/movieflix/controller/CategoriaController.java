@@ -5,6 +5,7 @@ import com.ufn.movieflix.controller.response.CategoriaResponse;
 import com.ufn.movieflix.entity.Categoria;
 import com.ufn.movieflix.mapper.CategoriaMapper;
 import com.ufn.movieflix.service.CategoriaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +37,14 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaResponse> salvarCategoria(@RequestBody CategoriaRequest requisicao){
+    public ResponseEntity<CategoriaResponse> salvarCategoria(@Valid @RequestBody CategoriaRequest requisicao){
         Categoria categoria = CategoriaMapper.paraCategoria(requisicao);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(CategoriaMapper.paraCategoriaResponse(categoriaService.salvarCategoria(categoria)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaResponse> atualizarCategoria(@PathVariable Long id, @RequestBody CategoriaRequest requisicao){
+    public ResponseEntity<CategoriaResponse> atualizarCategoria(@PathVariable Long id, @Valid @RequestBody CategoriaRequest requisicao){
         return categoriaService.atualizarCategoria(id, CategoriaMapper.paraCategoria(requisicao))
                 .map(categoria -> ResponseEntity.ok(CategoriaMapper.paraCategoriaResponse(categoria)))
                 .orElse(ResponseEntity.notFound().build());

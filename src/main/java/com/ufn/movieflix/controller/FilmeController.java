@@ -5,6 +5,7 @@ import com.ufn.movieflix.controller.response.FilmeResponse;
 import com.ufn.movieflix.entity.Filme;
 import com.ufn.movieflix.mapper.FilmeMapper;
 import com.ufn.movieflix.service.FilmeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,13 +47,13 @@ public class FilmeController {
     }
 
     @PostMapping
-    public ResponseEntity<FilmeResponse> salvarFilme(@RequestBody FilmeRequest requisicao){
+    public ResponseEntity<FilmeResponse> salvarFilme(@Valid @RequestBody FilmeRequest requisicao){
         Filme filmeSalvo = filmeService.salvarFilme(FilmeMapper.paraFilme(requisicao));
         return ResponseEntity.ok(FilmeMapper.paraFilmeResponse(filmeSalvo));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FilmeResponse> atualizarFilme(@PathVariable Long id, @RequestBody FilmeRequest requisicao){
+    public ResponseEntity<FilmeResponse> atualizarFilme(@PathVariable Long id, @Valid @RequestBody FilmeRequest requisicao){
         return filmeService.atualizarFilme(id, FilmeMapper.paraFilme(requisicao))
                 .map(filme -> ResponseEntity.ok(FilmeMapper.paraFilmeResponse(filme)))
                 .orElse(ResponseEntity.notFound().build());
